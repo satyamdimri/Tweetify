@@ -1,0 +1,30 @@
+{% extends "layout.html" %} 
+{% block title %}
+Django Project - Home
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center mt-4">Welcome to the Django Project</h1>
+<p>This is a sample template layout.</p>
+
+<a href="{% url 'tweet_create' %}" class="btn btn-primary">Create New Tweet</a>
+<div class="container row">
+  {% for tweet in tweets %}
+  <div class="card" style="width: 18rem">
+    {% if tweet.photo %}
+      <img src="{{ tweet.photo.url }}" class="card-img-top" alt="..." />
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{ tweet.title }}</h5>
+      <p class="card-text">
+        {{ tweet.text }}
+        {% if tweet.user == user %}
+        <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
